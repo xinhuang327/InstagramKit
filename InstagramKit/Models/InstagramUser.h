@@ -22,6 +22,7 @@
 
 #import "InstagramModel.h"
 
+
 @interface InstagramUser : InstagramModel <NSCopying, NSSecureCoding, NSObject>
 
 /**

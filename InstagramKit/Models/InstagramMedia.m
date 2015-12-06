@@ -91,6 +91,13 @@
     NSDictionary *standardResInfo = imagesInfo[kStandardResolution];
     _standardResolutionImageURL = IKNotNull(standardResInfo[kURL])? [[NSURL alloc] initWithString:standardResInfo[kURL]] : nil;
     _standardResolutionImageFrameSize = CGSizeMake([standardResInfo[kWidth] floatValue], [standardResInfo[kHeight] floatValue]);
+    
+    if ([InstagramModel urlProcessor] != nil) {
+        IGURLProcessor pro = [InstagramModel urlProcessor];
+        _thumbnailURL = [NSURL URLWithString:pro([_thumbnailURL absoluteString])];
+        _lowResolutionImageURL = [NSURL URLWithString:pro([_lowResolutionImageURL absoluteString])];
+        _standardResolutionImageURL = [NSURL URLWithString:pro([_standardResolutionImageURL absoluteString])];
+    }
 }
 
 - (void)initializeVideos:(NSDictionary *)videosInfo
@@ -102,6 +109,12 @@
     NSDictionary *standardResInfo = videosInfo[kStandardResolution];
     _standardResolutionVideoURL = IKNotNull(standardResInfo[kURL])? [[NSURL alloc] initWithString:standardResInfo[kURL]] : nil;
     _standardResolutionVideoFrameSize = CGSizeMake([standardResInfo[kWidth] floatValue], [standardResInfo[kHeight] floatValue]);
+    
+    if ([InstagramModel urlProcessor] != nil) {
+        IGURLProcessor pro = [InstagramModel urlProcessor];
+        _lowResolutionVideoURL = [NSURL URLWithString:pro([_lowResolutionVideoURL absoluteString])];
+        _standardResolutionVideoURL = [NSURL URLWithString:pro([_standardResolutionVideoURL absoluteString])];
+    }
 }
 
 #pragma mark - Equality

@@ -57,7 +57,7 @@
 /**
  *  Number of likes on the Media.
  */
-@property (nonatomic, readonly) NSInteger likesCount;
+@property (nonatomic, readwrite) NSInteger likesCount;
 
 /**
  *  List of users who have liked the Media.
@@ -67,12 +67,12 @@
 /**
  *  Number of comments on the Media.
  */
-@property (nonatomic, readonly) NSInteger commentCount;
+@property (nonatomic, readwrite) NSInteger commentCount;
 
 /**
  *  An array of comments on the Media.
  */
-@property (nonatomic, readonly) NSArray *comments;
+@property (nonatomic, readwrite) NSArray *comments;
 
 /**
  *  Tags on the Media.

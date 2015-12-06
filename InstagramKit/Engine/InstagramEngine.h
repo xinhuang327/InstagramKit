@@ -22,8 +22,15 @@
 #import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
 #import "InstagramKitConstants.h"
+#import "AFNetworking/AFNetworking.h"
 
 @interface InstagramEngine : NSObject
+
+@property (nonatomic, strong) AFHTTPSessionManager *httpManager;
+
+//NSString * (^IGURLProcessor)(NSString *) = ^NSString *(NSString * n) {
+//    return n;
+//};
 
 /*!
  @abstract Gets the singleton instance.

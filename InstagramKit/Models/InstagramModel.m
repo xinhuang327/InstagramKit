@@ -85,6 +85,16 @@ NSString *const kCursor = @"cursor";
 
 @implementation InstagramModel
 
+
+static IGURLProcessor _urlProcessor = nil;
++ (IGURLProcessor) urlProcessor {
+    return _urlProcessor;
+}
+
++ (void) setUrlProcessor:(IGURLProcessor)urlProcessor {
+    _urlProcessor = urlProcessor;
+}
+
 - (instancetype)initWithInfo:(NSDictionary *)info
 {
     self = [super init];

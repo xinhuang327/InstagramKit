@@ -75,12 +75,17 @@ INSTAGRAMKIT_EXTERN NSString *const kLocationLatitude;
 INSTAGRAMKIT_EXTERN NSString *const kLocationLongitude;
 INSTAGRAMKIT_EXTERN NSString *const kLocationName;
 
+typedef NSString * (^IGURLProcessor)(NSString *);
+
 @interface InstagramModel : NSObject <NSCopying, NSSecureCoding, NSObject>
+
++ (IGURLProcessor) urlProcessor;
++ (void) setUrlProcessor:(IGURLProcessor)urlProcessor;
 
 /**
  *  The unique identifier for each model object.
  */
-@property (readonly) NSString* Id;
+@property (readwrite) NSString* Id;
 
 /**
  *  Initializes a new instance.

@@ -32,8 +32,6 @@
 #endif
 
 @interface InstagramEngine()
-
-@property (nonatomic, strong) AFHTTPSessionManager *httpManager;
 @property (nonatomic, strong) dispatch_queue_t backgroundQueue;
 
 #if INSTAGRAMKIT_UICKEYCHAINSTORE

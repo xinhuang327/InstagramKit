@@ -47,6 +47,10 @@
         _followsCount = [(info[kCounts])[kCountFollows] integerValue];
         _followedByCount = [(info[kCounts])[kCountFollowedBy] integerValue];
     }
+    if ([InstagramModel urlProcessor] != nil) {
+        IGURLProcessor pro = [InstagramModel urlProcessor];
+        _profilePictureURL = [NSURL URLWithString:pro([_profilePictureURL absoluteString])];
+    }
 }
 
 #pragma mark - Equality
