@@ -10,7 +10,8 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/shyambhat/InstagramKit'
   s.license      = 'MIT'
   s.author       = { "Shyam Bhat" => "shyambhat@me.com" }
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '7.0', :tvos, "9.0"
+  s.tvos.deployment_target = '9.0'
   s.source       = { :git => "https://github.com/shyambhat/InstagramKit.git", :tag => s.version }
   s.source_files  = 'InstagramKit', 'InstagramKit/**/*.{h,m}'
   s.exclude_files = 'InstagramKitDemo'
