@@ -20,14 +20,20 @@
 
 #import <Foundation/Foundation.h>
 #import "InstagramModel.h"
+
+#if !TARGET_OS_TV
 #import <MapKit/MapKit.h>
+#endif
 
 @interface InstagramLocation : InstagramModel <NSCopying, NSSecureCoding, NSObject>
 
 /**
  *  Geographic coordinates if the Location.
  */
+// TODO: FIX CLLocationCoordinate2D coordinates
+#if !TARGET_OS_TV
 @property (readonly) CLLocationCoordinate2D coordinates;
+#endif
 
 /**
  *  Location name as provided by the API.

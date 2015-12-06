@@ -27,11 +27,13 @@
 {
     self = [super initWithInfo:info];
     if (self && IKNotNull(info)) {
-
+        
+#if !TARGET_OS_TV
         CLLocationCoordinate2D coordinates;
         coordinates.latitude = [info[kLocationLatitude] doubleValue];
         coordinates.longitude = [info[kLocationLongitude] doubleValue];
         _coordinates = coordinates;
+#endif
         _name =  (IKNotNull(info[kLocationName])) ? [[NSString alloc] initWithString:info[kLocationName]] : nil;
     }
     return self;
@@ -53,10 +55,12 @@
 - (id)initWithCoder:(NSCoder *)decoder
 {
     if ((self = [super initWithCoder:decoder])) {
+#if !TARGET_OS_TV
         CLLocationCoordinate2D coordinates;
         coordinates.latitude = [decoder decodeDoubleForKey:kLocationLatitude];
         coordinates.longitude = [decoder decodeDoubleForKey:kLocationLongitude];
         _coordinates = coordinates;
+#endif
         _name = [decoder decodeObjectOfClass:[NSString class] forKey:kLocationName];
     }
     return self;
@@ -65,9 +69,11 @@
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
     [super encodeWithCoder:encoder];
-
+    
+#if !TARGET_OS_TV
     [encoder encodeDouble:_coordinates.latitude forKey:kLocationLatitude];
     [encoder encodeDouble:_coordinates.longitude forKey:kLocationLongitude];
+#endif
     [encoder encodeObject:_name forKey:kLocationName];
 }
 
@@ -76,7 +82,9 @@
 - (id)copyWithZone:(NSZone *)zone
 {
     InstagramLocation *copy = [super copyWithZone:zone];
+#if !TARGET_OS_TV
     copy->_coordinates = _coordinates;
+#endif
     copy->_name = [_name copy];
     return copy;
 }
