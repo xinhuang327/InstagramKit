@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.source_files  = 'InstagramKit', 'InstagramKit/**/*.{h,m}'
   s.exclude_files = 'InstagramKitDemo'
   s.requires_arc = true
-  s.dependency 'AFNetworking', '~>3.0'
+  s.dependency 'AFNetworking', '3.0.0-beta.3'
   s.default_subspec = 'Exclude-UICKeyChainStore'
 
   s.subspec 'Exclude-UICKeyChainStore' do |exclude_uickeychainstore|
