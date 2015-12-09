@@ -22,10 +22,7 @@
 
 #import "InstagramModel.h"
 
-<<<<<<< HEAD
-=======
 NS_ASSUME_NONNULL_BEGIN
->>>>>>> shyambhat/master
 
 @interface InstagramUser : InstagramModel <NSCopying, NSSecureCoding, NSObject>
 

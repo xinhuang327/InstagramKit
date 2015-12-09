@@ -89,7 +89,7 @@ NSString *const kCursor = @"cursor";
 
 @interface InstagramModel ()
 
-@property (atomic, copy) NSString *Id;
+//@property (atomic, copy) NSString *Id;
 
 @end
 

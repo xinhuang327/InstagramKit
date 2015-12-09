@@ -23,7 +23,10 @@
 
 @interface InstagramLocation ()
 
+#if !TARGET_OS_TV
 @property (nonatomic, assign) CLLocationCoordinate2D coordinates;
+#endif
+
 @property (nonatomic, copy) NSString *name;
 
 @end
@@ -39,14 +42,9 @@
         CLLocationCoordinate2D coordinates;
         coordinates.latitude = [info[kLocationLatitude] doubleValue];
         coordinates.longitude = [info[kLocationLongitude] doubleValue];
-<<<<<<< HEAD
         _coordinates = coordinates;
 #endif
         _name =  (IKNotNull(info[kLocationName])) ? [[NSString alloc] initWithString:info[kLocationName]] : nil;
-=======
-        self.coordinates = coordinates;
-        self.name =  (IKNotNull(info[kLocationName])) ? [[NSString alloc] initWithString:info[kLocationName]] : nil;
->>>>>>> shyambhat/master
     }
     return self;
 }
@@ -71,14 +69,9 @@
         CLLocationCoordinate2D coordinates;
         coordinates.latitude = [decoder decodeDoubleForKey:kLocationLatitude];
         coordinates.longitude = [decoder decodeDoubleForKey:kLocationLongitude];
-<<<<<<< HEAD
         _coordinates = coordinates;
 #endif
         _name = [decoder decodeObjectOfClass:[NSString class] forKey:kLocationName];
-=======
-        self.coordinates = coordinates;
-        self.name = [decoder decodeObjectOfClass:[NSString class] forKey:kLocationName];
->>>>>>> shyambhat/master
     }
     return self;
 }
@@ -86,19 +79,11 @@
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
     [super encodeWithCoder:encoder];
-<<<<<<< HEAD
-    
 #if !TARGET_OS_TV
     [encoder encodeDouble:_coordinates.latitude forKey:kLocationLatitude];
     [encoder encodeDouble:_coordinates.longitude forKey:kLocationLongitude];
 #endif
     [encoder encodeObject:_name forKey:kLocationName];
-=======
-
-    [encoder encodeDouble:self.coordinates.latitude forKey:kLocationLatitude];
-    [encoder encodeDouble:self.coordinates.longitude forKey:kLocationLongitude];
-    [encoder encodeObject:self.name forKey:kLocationName];
->>>>>>> shyambhat/master
 }
 
 #pragma mark - NSCopying
@@ -106,15 +91,10 @@
 - (id)copyWithZone:(NSZone *)zone
 {
     InstagramLocation *copy = [super copyWithZone:zone];
-<<<<<<< HEAD
 #if !TARGET_OS_TV
     copy->_coordinates = _coordinates;
 #endif
     copy->_name = [_name copy];
-=======
-    copy->_coordinates = self.coordinates;
-    copy->_name = [self.name copy];
->>>>>>> shyambhat/master
     return copy;
 }
 

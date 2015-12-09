@@ -32,14 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Geographic coordinates if the Location.
  */
-<<<<<<< HEAD
 // TODO: FIX CLLocationCoordinate2D coordinates
 #if !TARGET_OS_TV
 @property (readonly) CLLocationCoordinate2D coordinates;
 #endif
-=======
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinates;
->>>>>>> shyambhat/master
 
 /**
  *  Location name as provided by the API.

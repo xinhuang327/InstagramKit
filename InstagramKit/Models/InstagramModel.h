@@ -92,12 +92,7 @@ typedef NSString * (^IGURLProcessor)(NSString *);
 /**
  *  The unique identifier for each model object.
  */
-<<<<<<< HEAD
 @property (readwrite) NSString* Id;
-=======
-@property (atomic, readonly, copy) NSString *Id;
->>>>>>> shyambhat/master
-
 /**
  *  Initializes a new instance.
  *  @param info JSON dictionary
