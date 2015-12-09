@@ -32,14 +32,11 @@
 #endif
 
 @interface InstagramEngine()
-<<<<<<< HEAD
 @property (nonatomic, strong) dispatch_queue_t backgroundQueue;
-=======
 
 @property (nonatomic, copy, nonnull) NSString *appClientID;
 @property (nonatomic, copy, nonnull) NSString *appRedirectURL;
-@property (nonatomic, strong, nonnull) AFHTTPSessionManager *httpManager;
->>>>>>> shyambhat/master
+//@property (nonatomic, strong, nonnull) AFHTTPSessionManager *httpManager;
 
 #if INSTAGRAMKIT_UICKEYCHAINSTORE
 @property (nonatomic, strong, nonnull) UICKeyChainStore *keychainStore;

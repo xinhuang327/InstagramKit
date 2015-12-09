@@ -32,7 +32,9 @@
 @property (nonatomic, copy) NSString *link;
 @property (nonatomic, strong) InstagramComment *caption;
 @property (nonatomic, strong) NSMutableArray *mLikes;
+@property (nonatomic) NSInteger mLikesCount;
 @property (nonatomic, strong) NSMutableArray *mComments;
+@property (nonatomic) NSInteger mCommentCount;
 @property (nonatomic, strong) NSMutableArray *mUsersInPhoto;
 @property (nonatomic, strong) NSArray *tags;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
@@ -65,12 +67,14 @@
         self.createdDate = [[NSDate alloc] initWithTimeIntervalSince1970:[info[kCreatedDate] doubleValue]];
         self.link = [[NSString alloc] initWithString:info[kLink]];
         self.caption = [[InstagramComment alloc] initWithInfo:info[kCaption]];
+        self.mLikesCount = [(info[kLikes])[kCount] integerValue];
         self.mLikes = [[NSMutableArray alloc] init];
         for (NSDictionary *userInfo in (info[kLikes])[kData]) {
             InstagramUser *user = [[InstagramUser alloc] initWithInfo:userInfo];
             [self.mLikes addObject:user];
         }
         
+        self.mCommentCount = [(info[kComments])[kCount] integerValue];
         self.mComments = [[NSMutableArray alloc] init];
         for (NSDictionary *commentInfo in (info[kComments])[kData]) {
             InstagramComment *comment = [[InstagramComment alloc] initWithInfo:commentInfo];
@@ -116,7 +120,6 @@
     self.lowResolutionImageFrameSize = CGSizeMake([lowResInfo[kWidth] floatValue], [lowResInfo[kHeight] floatValue]);
     
     NSDictionary *standardResInfo = imagesInfo[kStandardResolution];
-<<<<<<< HEAD
     _standardResolutionImageURL = IKNotNull(standardResInfo[kURL])? [[NSURL alloc] initWithString:standardResInfo[kURL]] : nil;
     _standardResolutionImageFrameSize = CGSizeMake([standardResInfo[kWidth] floatValue], [standardResInfo[kHeight] floatValue]);
     
@@ -126,10 +129,6 @@
         _lowResolutionImageURL = [NSURL URLWithString:pro([_lowResolutionImageURL absoluteString])];
         _standardResolutionImageURL = [NSURL URLWithString:pro([_standardResolutionImageURL absoluteString])];
     }
-=======
-    self.standardResolutionImageURL = IKNotNull(standardResInfo[kURL])? [[NSURL alloc] initWithString:standardResInfo[kURL]] : nil;
-    self.standardResolutionImageFrameSize = CGSizeMake([standardResInfo[kWidth] floatValue], [standardResInfo[kHeight] floatValue]);
->>>>>>> shyambhat/master
 }
 
 - (void)initializeVideos:(NSDictionary *)videosInfo
@@ -139,7 +138,6 @@
     self.lowResolutionVideoFrameSize = CGSizeMake([lowResInfo[kWidth] floatValue], [lowResInfo[kHeight] floatValue]);
     
     NSDictionary *standardResInfo = videosInfo[kStandardResolution];
-<<<<<<< HEAD
     _standardResolutionVideoURL = IKNotNull(standardResInfo[kURL])? [[NSURL alloc] initWithString:standardResInfo[kURL]] : nil;
     _standardResolutionVideoFrameSize = CGSizeMake([standardResInfo[kWidth] floatValue], [standardResInfo[kHeight] floatValue]);
     
@@ -148,9 +146,6 @@
         _lowResolutionVideoURL = [NSURL URLWithString:pro([_lowResolutionVideoURL absoluteString])];
         _standardResolutionVideoURL = [NSURL URLWithString:pro([_standardResolutionVideoURL absoluteString])];
     }
-=======
-    self.standardResolutionVideoURL = IKNotNull(standardResInfo[kURL])? [[NSURL alloc] initWithString:standardResInfo[kURL]] : nil;
-    self.standardResolutionVideoFrameSize = CGSizeMake([standardResInfo[kWidth] floatValue], [standardResInfo[kHeight] floatValue]);
 }
 
 #pragma Getters 
@@ -162,7 +157,7 @@
 
 - (NSInteger)likesCount
 {
-    return [self.mLikes count];
+    return self.mLikesCount;
 }
 
 - (NSArray *)comments
@@ -172,13 +167,12 @@
 
 - (NSInteger)commentCount
 {
-    return [self.mComments count];
+    return self.mCommentCount;
 }
 
 - (NSArray *)usersInPhoto
 {
     return [NSArray arrayWithArray:self.mUsersInPhoto];
->>>>>>> shyambhat/master
 }
 
 #pragma mark - Equality
@@ -202,7 +196,9 @@
         self.createdDate = [decoder decodeObjectOfClass:[NSDate class] forKey:kCreatedDate];
         self.link = [decoder decodeObjectOfClass:[NSString class] forKey:kLink];
         self.caption = [decoder decodeObjectOfClass:[NSString class] forKey:kCaption];
+        self.likesCount = [decoder decodeIntegerForKey:[NSString stringWithFormat:@"%@%@",kLikes,kCount]];
         self.mLikes = [[decoder decodeObjectOfClass:[NSArray class] forKey:kLikes] mutableCopy];
+        self.commentCount = [decoder decodeIntegerForKey:[NSString stringWithFormat:@"%@%@",kComments,kCount]];
         self.mComments = [[decoder decodeObjectOfClass:[NSArray class] forKey:kComments] mutableCopy];
         self.mUsersInPhoto = [[decoder decodeObjectOfClass:[NSArray class] forKey:kUsersInPhoto] mutableCopy];
         self.tags = [decoder decodeObjectOfClass:[NSArray class] forKey:kTags];
@@ -246,7 +242,9 @@
     [encoder encodeObject:self.createdDate forKey:kCreatedDate];
     [encoder encodeObject:self.link forKey:kLink];
     [encoder encodeObject:self.caption forKey:kCaption];
+    [encoder encodeInteger:self.mLikesCount forKey:[NSString stringWithFormat:@"%@%@",kLikes,kCount]];
     [encoder encodeObject:self.mLikes forKey:kLikes];
+    [encoder encodeInteger:self.mCommentCount forKey:[NSString stringWithFormat:@"%@%@",kComments,kCount]];
     [encoder encodeObject:self.mComments forKey:kComments];
     [encoder encodeObject:self.mUsersInPhoto forKey:kUsersInPhoto];
     [encoder encodeObject:self.tags forKey:kTags];
@@ -284,7 +282,9 @@
     copy->_createdDate = [self.createdDate copy];
     copy->_link = [self.link copy];
     copy->_caption = [self.caption copy];
+    copy->_mLikesCount = _mLikesCount;
     copy->_mLikes = [self.mLikes copy];
+    copy->_mCommentCount = _mCommentCount;
     copy->_mComments = [self.mComments copy];
     copy->_mUsersInPhoto = [self.mUsersInPhoto copy];
     copy->_tags = [self.tags copy];
