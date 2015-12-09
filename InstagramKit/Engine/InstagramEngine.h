@@ -24,6 +24,10 @@
 #import "InstagramKitConstants.h"
 #import "AFNetworking/AFNetworking.h"
 
+
+NS_ASSUME_NONNULL_BEGIN
+
+
 @interface InstagramEngine : NSObject
 
 @property (nonatomic, strong) AFHTTPSessionManager *httpManager;
@@ -40,18 +44,18 @@
 /**
  *  Client Id of your App, as registered with Instagram.
  */
-@property (nonatomic, copy) NSString *appClientID;
+@property (nonatomic, copy, readonly) NSString *appClientID;
 
 /**
  *  Redirect URL of your App, as registered with Instagram.
  */
-@property (nonatomic, copy) NSString *appRedirectURL;
+@property (nonatomic, copy, readonly) NSString *appRedirectURL;
 
 /**
  *  The oauth token stored in the account store credential, if available.
  *  If not empty, this implies user has granted access.
  */
-@property (nonatomic, strong) NSString *accessToken;
+@property (nonatomic, copy, nullable) NSString *accessToken;
 
 
 #pragma mark - Authentication -
@@ -85,7 +89,7 @@
  *  @return YES if valid token extracted and saved, otherwise NO.
  */
 - (BOOL)receivedValidAccessTokenFromURL:(NSURL *)url
-                                  error:(NSError *__autoreleasing *)error;
+                                  error:(NSError * _Nullable __autoreleasing *)error;
 
 /**
  *  Validate if authorization is done.
@@ -111,7 +115,7 @@
  */
 - (void)getMedia:(NSString *)mediaId
      withSuccess:(InstagramMediaObjectBlock)success
-         failure:(InstagramFailureBlock)failure;
+         failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -121,7 +125,7 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getPopularMediaWithSuccess:(InstagramMediaBlock)success
-                           failure:(InstagramFailureBlock)failure;
+                           failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark -
@@ -137,7 +141,7 @@
  */
 - (void)getMediaAtLocation:(CLLocationCoordinate2D)location
                withSuccess:(InstagramMediaBlock)success
-                   failure:(InstagramFailureBlock)failure;
+                   failure:(nullable InstagramFailureBlock)failure;
 
 /**
  *  Search for media in a given area. The default time span is set to 5 days.
@@ -152,10 +156,21 @@
  */
 - (void)getMediaAtLocation:(CLLocationCoordinate2D)location
                      count:(NSInteger)count
-                     maxId:(NSString *)maxId
+                     maxId:(nullable NSString *)maxId
                   distance:(CGFloat)distance
                withSuccess:(InstagramMediaBlock)success
-                   failure:(InstagramFailureBlock)failure;
+                   failure:(nullable InstagramFailureBlock)failure;
+
+/**
+ *  Get a list of recent media objects from a given location.
+ *
+ *  @param locationId   Id of a Location object.
+ *  @param success      Provides an array of Media objects and Pagination info.
+ *  @param failure      Provides an error and a server status code.
+ */
+- (void)getMediaAtLocationWithId:(NSString*)locationId
+                     withSuccess:(InstagramMediaBlock)success
+                         failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark - Locations -
@@ -170,7 +185,7 @@
  */
 - (void)searchLocationsAtLocation:(CLLocationCoordinate2D)loction
                       withSuccess:(InstagramLocationsBlock)success
-                          failure:(InstagramFailureBlock)failure;
+                          failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -184,7 +199,7 @@
 - (void)searchLocationsAtLocation:(CLLocationCoordinate2D)loction
                  distanceInMeters:(NSInteger)distance
                       withSuccess:(InstagramLocationsBlock)success
-                          failure:(InstagramFailureBlock)failure;
+                          failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -196,19 +211,7 @@
  */
 - (void)getLocationWithId:(NSString*)locationId
               withSuccess:(InstagramLocationBlock)success
-                  failure:(InstagramFailureBlock)failure;
-
-
-/**
- *  Get a list of recent media objects from a given location.
- *
- *  @param locationId   Id of a Location object.
- *  @param success      Provides an array of Media objects and Pagination info.
- *  @param failure      Provides an error and a server status code.
- */
-- (void)getMediaAtLocationWithId:(NSString*)locationId
-                     withSuccess:(InstagramMediaBlock)success
-                         failure:(InstagramFailureBlock)failure;
+                  failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark - Users -
@@ -223,7 +226,7 @@
  */
 - (void)getUserDetails:(NSString *)userId
            withSuccess:(InstagramUserBlock)success
-               failure:(InstagramFailureBlock)failure;
+               failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark -
@@ -238,7 +241,7 @@
  */
 - (void)getMediaForUser:(NSString *)userId
             withSuccess:(InstagramMediaBlock)success
-                failure:(InstagramFailureBlock)failure;
+                failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -252,9 +255,9 @@
  */
 - (void)getMediaForUser:(NSString *)userId
                   count:(NSInteger)count
-                  maxId:(NSString *)maxId
+                  maxId:(nullable NSString *)maxId
             withSuccess:(InstagramMediaBlock)success
-                failure:(InstagramFailureBlock)failure;
+                failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark -
@@ -269,7 +272,7 @@
  */
 - (void)searchUsersWithString:(NSString *)name
                   withSuccess:(InstagramUsersBlock)success
-                      failure:(InstagramFailureBlock)failure;
+                      failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark - Self User -
@@ -282,7 +285,7 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getSelfUserDetailsWithSuccess:(InstagramUserBlock)success
-                              failure:(InstagramFailureBlock)failure;
+                              failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark -
@@ -295,7 +298,7 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getSelfFeedWithSuccess:(InstagramMediaBlock)success
-                       failure:(InstagramFailureBlock)failure;
+                       failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -307,9 +310,9 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getSelfFeedWithCount:(NSInteger)count
-                       maxId:(NSString *)maxId
+                       maxId:(nullable NSString *)maxId
                      success:(InstagramMediaBlock)success
-                     failure:(InstagramFailureBlock)failure;
+                     failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark -
@@ -324,7 +327,7 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getMediaLikedBySelfWithSuccess:(InstagramMediaBlock)success
-                               failure:(InstagramFailureBlock)failure;
+                               failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -338,9 +341,9 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getMediaLikedBySelfWithCount:(NSInteger)count
-                               maxId:(NSString *)maxId
+                               maxId:(nullable NSString *)maxId
                              success:(InstagramMediaBlock)success
-                             failure:(InstagramFailureBlock)failure;
+                             failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark -
@@ -353,7 +356,7 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getSelfRecentMediaWithSuccess:(InstagramMediaBlock)success
-                              failure:(InstagramFailureBlock)failure;
+                              failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -365,9 +368,9 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getSelfRecentMediaWithCount:(NSInteger)count
-                              maxId:(NSString *)maxId
+                              maxId:(nullable NSString *)maxId
                             success:(InstagramMediaBlock)success
-                            failure:(InstagramFailureBlock)failure;
+                            failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark - Tags -
@@ -382,7 +385,7 @@
  */
 - (void)getTagDetailsWithName:(NSString *)name
                   withSuccess:(InstagramTagBlock)success
-                      failure:(InstagramFailureBlock)failure;
+                      failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark -
@@ -397,7 +400,7 @@
  */
 - (void)getMediaWithTagName:(NSString *)name
                 withSuccess:(InstagramMediaBlock)success
-                    failure:(InstagramFailureBlock)failure;
+                    failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -411,9 +414,9 @@
  */
 - (void)getMediaWithTagName:(NSString *)tag
                       count:(NSInteger)count
-                      maxId:(NSString *)maxId
+                      maxId:(nullable NSString *)maxId
                 withSuccess:(InstagramMediaBlock)success
-                    failure:(InstagramFailureBlock)failure;
+                    failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark -
@@ -428,7 +431,7 @@
  */
 - (void)searchTagsWithName:(NSString *)name
                withSuccess:(InstagramTagsBlock)success
-                   failure:(InstagramFailureBlock)failure;
+                   failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -442,9 +445,9 @@
  */
 - (void)searchTagsWithName:(NSString *)name
                      count:(NSInteger)count
-                     maxId:(NSString *)maxId
+                     maxId:(nullable NSString *)maxId
                withSuccess:(InstagramTagsBlock)success
-                   failure:(InstagramFailureBlock)failure;
+                   failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark - Comments -
@@ -459,7 +462,7 @@
  */
 - (void)getCommentsOnMedia:(NSString *)mediaId
                withSuccess:(InstagramCommentsBlock)success
-                   failure:(InstagramFailureBlock)failure;
+                   failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -482,7 +485,7 @@
 - (void)createComment:(NSString *)commentText
               onMedia:(NSString *)mediaId
           withSuccess:(InstagramResponseBlock)success
-              failure:(InstagramFailureBlock)failure;
+              failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -502,7 +505,7 @@
 - (void)removeComment:(NSString *)commentId
               onMedia:(NSString *)mediaId
           withSuccess:(InstagramResponseBlock)success
-              failure:(InstagramFailureBlock)failure;
+              failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark - Likes -
@@ -517,7 +520,7 @@
  */
 - (void)getLikesOnMedia:(NSString *)mediaId
             withSuccess:(InstagramUsersBlock)success
-                failure:(InstagramFailureBlock)failure;
+                failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -533,7 +536,7 @@
  */
 - (void)likeMedia:(NSString *)mediaId
       withSuccess:(InstagramResponseBlock)success
-          failure:(InstagramFailureBlock)failure;
+          failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -549,7 +552,7 @@
  */
 - (void)unlikeMedia:(NSString *)mediaId
         withSuccess:(InstagramResponseBlock)success
-            failure:(InstagramFailureBlock)failure;
+            failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark - Relationships -
@@ -564,7 +567,7 @@
  */
 - (void)getRelationshipStatusOfUser:(NSString *)userId
                         withSuccess:(InstagramResponseBlock)success
-                            failure:(InstagramFailureBlock)failure;
+                            failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -576,7 +579,7 @@
  */
 - (void)getUsersFollowedByUser:(NSString *)userId
                    withSuccess:(InstagramUsersBlock)success
-                       failure:(InstagramFailureBlock)failure;
+                       failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -588,7 +591,7 @@
  */
 - (void)getFollowersOfUser:(NSString *)userId
                withSuccess:(InstagramUsersBlock)success
-                   failure:(InstagramFailureBlock)failure;
+                   failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -598,7 +601,7 @@
  *  @param failure  Provides an error and a server status code.
  */
 - (void)getFollowRequestsWithSuccess:(InstagramUsersBlock)success
-                             failure:(InstagramFailureBlock)failure;
+                             failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -616,7 +619,7 @@
  */
 - (void)followUser:(NSString *)userId
        withSuccess:(InstagramResponseBlock)success
-           failure:(InstagramFailureBlock)failure;
+           failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -634,7 +637,7 @@
  */
 - (void)unfollowUser:(NSString *)userId
          withSuccess:(InstagramResponseBlock)success
-             failure:(InstagramFailureBlock)failure;
+             failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -652,7 +655,7 @@
  */
 - (void)blockUser:(NSString *)userId
       withSuccess:(InstagramResponseBlock)success
-          failure:(InstagramFailureBlock)failure;
+          failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -670,7 +673,7 @@
  */
 - (void)unblockUser:(NSString *)userId
         withSuccess:(InstagramResponseBlock)success
-            failure:(InstagramFailureBlock)failure;
+            failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -688,7 +691,7 @@
  */
 - (void)approveUser:(NSString *)userId
         withSuccess:(InstagramResponseBlock)success
-            failure:(InstagramFailureBlock)failure;
+            failure:(nullable InstagramFailureBlock)failure;
 
 
 /**
@@ -706,7 +709,7 @@
  */
 - (void)ignoreUser:(NSString *)userId
      withSuccess:(InstagramResponseBlock)success
-         failure:(InstagramFailureBlock)failure;
+         failure:(nullable InstagramFailureBlock)failure;
 
 
 #pragma mark - Common Pagination Request -
@@ -721,7 +724,9 @@
  */
 - (void)getPaginatedItemsForInfo:(InstagramPaginationInfo *)paginationInfo
                      withSuccess:(InstagramPaginatiedResponseBlock)success
-                         failure:(InstagramFailureBlock)failure;
+                         failure:(nullable InstagramFailureBlock)failure;
 
 
 @end
+
+NS_ASSUME_NONNULL_END

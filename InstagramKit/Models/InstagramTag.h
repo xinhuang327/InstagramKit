@@ -21,17 +21,19 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface InstagramTag : NSObject <NSCopying, NSSecureCoding, NSObject>
 
 /**
  *  Tag name
  */
-@property (readonly) NSString* name;
+@property (nonatomic, readonly, copy) NSString *name;
 
 /**
  *  Number of Media tagged by this Tag.
  */
-@property (readonly) NSInteger mediaCount;
+@property (nonatomic, readonly) NSInteger mediaCount;
 
 /**
  *  Comparing InstagramTag objects.
@@ -41,3 +43,5 @@
 - (BOOL)isEqualToTag:(InstagramTag *)tag;
 
 @end
+
+NS_ASSUME_NONNULL_END

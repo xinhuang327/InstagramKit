@@ -21,6 +21,8 @@
 #import <Foundation/Foundation.h>
 #import "InstagramKitConstants.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  JSON keys as string constants.
  */
@@ -68,6 +70,11 @@ INSTAGRAMKIT_EXTERN NSString *const kCountMedia;
 INSTAGRAMKIT_EXTERN NSString *const kCountFollows;
 INSTAGRAMKIT_EXTERN NSString *const kCountFollowedBy;
 
+INSTAGRAMKIT_EXTERN NSString *const kUsersInPhoto;
+INSTAGRAMKIT_EXTERN NSString *const kPosition;
+INSTAGRAMKIT_EXTERN NSString *const kX;
+INSTAGRAMKIT_EXTERN NSString *const kY;
+
 INSTAGRAMKIT_EXTERN NSString *const kTagMediaCount;
 INSTAGRAMKIT_EXTERN NSString *const kTagName;
 
@@ -85,7 +92,11 @@ typedef NSString * (^IGURLProcessor)(NSString *);
 /**
  *  The unique identifier for each model object.
  */
+<<<<<<< HEAD
 @property (readwrite) NSString* Id;
+=======
+@property (atomic, readonly, copy) NSString *Id;
+>>>>>>> shyambhat/master
 
 /**
  *  Initializes a new instance.
@@ -102,3 +113,4 @@ typedef NSString * (^IGURLProcessor)(NSString *);
 
 @end
 
+NS_ASSUME_NONNULL_END

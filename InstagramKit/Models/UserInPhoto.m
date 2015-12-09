@@ -18,34 +18,40 @@
 //    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "InstagramComment.h"
+#import "UserInPhoto.h"
+#import "InstagramModel.h"
 #import "InstagramUser.h"
 
-@interface InstagramComment ()
+@interface UserInPhoto ()
 
-@property (nonatomic, strong) NSDate *createdDate;
 @property (nonatomic, strong) InstagramUser *user;
-@property (nonatomic, copy) NSString *text;
+@property (nonatomic, assign) CGPoint position;
 
 @end
 
-@implementation InstagramComment
+@implementation UserInPhoto
 
-- (instancetype)initWithInfo:(NSDictionary *)info
+- (id)initWithInfo:(NSDictionary *)info
 {
     self = [super initWithInfo:info];
     if (self && IKNotNull(info)) {
-        self.user = [[InstagramUser alloc] initWithInfo:info[kCreator]];
-        self.text = [[NSString alloc] initWithString:info[kText]];
-        self.createdDate = [[NSDate alloc] initWithTimeIntervalSince1970:[info[kCreatedDate] doubleValue]];
+
+        NSDictionary *positionInfo = info[kPosition];
+        CGPoint position;
+        position.x = [positionInfo[kX] floatValue];
+        position.y = [info[kY] floatValue];
+        self.position = position;
+        self.user =  [[InstagramUser alloc] initWithInfo:info[kUser]];
     }
     return self;
 }
 
 #pragma mark - Equality
 
-- (BOOL)isEqualToComment:(InstagramComment *)comment {
-    return [super isEqualToModel:comment];
+- (BOOL)isEqualToUserInPhoto:(UserInPhoto *)userInPhoto {
+    return [self.user isEqualToUser:userInPhoto.user]
+    && self.position.x == userInPhoto.position.x
+    && self.position.y == userInPhoto.position.y;
 }
 
 #pragma mark - NSCoding
@@ -58,9 +64,11 @@
 - (id)initWithCoder:(NSCoder *)decoder
 {
     if ((self = [super initWithCoder:decoder])) {
-        self.user = [decoder decodeObjectOfClass:[InstagramUser class] forKey:kCreator];
-        self.text = [decoder decodeObjectOfClass:[NSString class] forKey:kText];
-        self.createdDate = [decoder decodeObjectOfClass:[NSDate class] forKey:kCreatedDate];
+        CGPoint position;
+        position.x = [decoder decodeDoubleForKey:kX];
+        position.y = [decoder decodeDoubleForKey:kY];
+        self.position = position;
+        self.user = [decoder decodeObjectOfClass:[NSString class] forKey:kLocationName];
     }
     return self;
 }
@@ -69,19 +77,18 @@
 {
     [super encodeWithCoder:encoder];
 
-    [encoder encodeObject:self.user forKey:kCreator];
-    [encoder encodeObject:self.text forKey:kText];
-    [encoder encodeObject:self.createdDate forKey:kCreatedDate];
+    [encoder encodeDouble:self.position.x forKey:kX];
+    [encoder encodeDouble:self.position.y forKey:kY];
+    [encoder encodeObject:self.user forKey:kUser];
 }
 
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    InstagramComment *copy = [super copyWithZone:zone];
+    UserInPhoto *copy = [super copyWithZone:zone];
+    copy->_position = self.position;
     copy->_user = [self.user copy];
-    copy->_text = [self.text copy];
-    copy->_createdDate = [self.createdDate copy];
     return copy;
 }
 

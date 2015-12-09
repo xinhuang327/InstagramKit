@@ -19,39 +19,33 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "InstagramModel.h"
+#include <CoreGraphics/CoreGraphics.h>
 
-#if !TARGET_OS_TV
-#import <MapKit/MapKit.h>
-#endif
+#import "InstagramModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InstagramLocation : InstagramModel <NSCopying, NSSecureCoding, NSObject>
+@class InstagramUser;
+
+@interface UserInPhoto : InstagramModel <NSCopying, NSSecureCoding, NSObject>
 
 /**
- *  Geographic coordinates if the Location.
+ *  User in photo.
  */
-<<<<<<< HEAD
-// TODO: FIX CLLocationCoordinate2D coordinates
-#if !TARGET_OS_TV
-@property (readonly) CLLocationCoordinate2D coordinates;
-#endif
-=======
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinates;
->>>>>>> shyambhat/master
+@property (nonatomic, readonly) InstagramUser *user;
 
 /**
- *  Location name as provided by the API.
+ *  Position of a user in a photo defined by x and y coordinates.
  */
-@property (nonatomic, copy, readonly, nullable) NSString *name;
+@property (nonatomic, readonly) CGPoint position;
+
 
 /**
- *  Comparing InstagramLocation objects.
- *  @param location An InstagramLocation object.
- *  @return         YES is Ids match. Else NO.
+ *  Comparing UserInPhoto objects.
+ *  @param  An UserInPhoto object.
+ *  @return YES is Ids match. Else NO.
  */
-- (BOOL)isEqualToLocation:(InstagramLocation *)location;
+- (BOOL)isEqualToUserInPhoto:(UserInPhoto *)userInPhoto;
 
 @end
 

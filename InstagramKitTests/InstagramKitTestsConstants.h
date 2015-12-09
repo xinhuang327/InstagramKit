@@ -18,41 +18,4 @@
 //    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "InstagramModel.h"
-
-#if !TARGET_OS_TV
-#import <MapKit/MapKit.h>
-#endif
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface InstagramLocation : InstagramModel <NSCopying, NSSecureCoding, NSObject>
-
-/**
- *  Geographic coordinates if the Location.
- */
-<<<<<<< HEAD
-// TODO: FIX CLLocationCoordinate2D coordinates
-#if !TARGET_OS_TV
-@property (readonly) CLLocationCoordinate2D coordinates;
-#endif
-=======
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinates;
->>>>>>> shyambhat/master
-
-/**
- *  Location name as provided by the API.
- */
-@property (nonatomic, copy, readonly, nullable) NSString *name;
-
-/**
- *  Comparing InstagramLocation objects.
- *  @param location An InstagramLocation object.
- *  @return         YES is Ids match. Else NO.
- */
-- (BOOL)isEqualToLocation:(InstagramLocation *)location;
-
-@end
-
-NS_ASSUME_NONNULL_END
+static NSInteger const kTestRequestTimeout = 10;
